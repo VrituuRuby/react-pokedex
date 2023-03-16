@@ -18,6 +18,7 @@ export const Container = styled.header`
     font-weight: bold;
 
     h1 {
+      font-family: Rubik;
       font-size: 2rem;
     }
 
@@ -28,6 +29,7 @@ export const Container = styled.header`
       gap: 0.5rem;
       height: 100%;
       a {
+        font-family: Rubik;
         height: 100%;
         padding: 1rem;
         text-decoration: none;

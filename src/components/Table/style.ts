@@ -13,6 +13,7 @@ export const Container = styled.div`
     border-radius: 0.5rem;
     font-size: 1.25rem;
     font-weight: bold;
+    color: white;
   }
 
   > div {
