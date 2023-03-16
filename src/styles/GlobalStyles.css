@@ -1,0 +1,82 @@
+html,
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-family: Roboto, sans-serif;
+}
+
+body {
+  --stripe-width: 20px;
+  --stripe-1: #111;
+  --stripe-2: #222;
+  max-height: 100vh;
+  background: repeating-linear-gradient(
+    135deg,
+    var(--stripe-1) 0px,
+    var(--stripe-1) var(--stripe-width),
+    var(--stripe-2) var(--stripe-width),
+    var(--stripe-2) calc(var(--stripe-width) * 2)
+  );
+  background-attachment: fixed;
+
+  height: 100vh;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: radial-gradient(
+    circle at top,
+    #ff2ed190,
+    rgba(0, 0, 0, 0.6)
+  );
+  opacity: 0.5;
+  z-index: -1;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+main {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 1rem;
+  flex-grow: 1;
+}
+
+#root {
+  max-height: 100vh;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  font-family: Rubik;
+  font-weight: bold;
+  display: flex;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem 0;
+  background: #111;
+}
+
+/* Pokemon Types  */
+
+span.poison {
+  background: #aa68ec;
+}
+
+span.ghost {
+  background: #5d3386;
+}
