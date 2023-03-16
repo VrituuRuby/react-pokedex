@@ -94,3 +94,59 @@ span.electric {
 span.fighting {
   background: #df1d28;
 }
+
+span.fire {
+  background: #f37a36;
+}
+
+span.dark {
+  background: #3a3645;
+}
+
+span.flying {
+  background: #afbde1;
+}
+
+span.flying {
+  background: #fa8072;
+}
+
+span.water {
+  background: #569ef3;
+}
+
+span.ice {
+  background: #61e7ef;
+}
+
+span.bug {
+  background: #6dc047;
+}
+
+span.grass {
+  background: #5ae257;
+}
+
+span.normal {
+  background: #c7b77e;
+}
+
+span.ground {
+  background: #b48731;
+}
+
+span.rock {
+  background: #7d6148;
+}
+
+span.steel {
+  background: #8390b1;
+}
+
+span.fairy {
+  background: #fc7fd1;
+}
+
+span.psychic {
+  background: #ce1bd1;
+}
