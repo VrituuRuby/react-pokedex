@@ -45,8 +45,8 @@ export const Container = styled.div`
     span {
       display: flex;
       align-items: center;
+      font-weight: bold;
       justify-content: center;
-      background-color: #aaa;
       padding: 0.25rem 0.5rem;
       border-radius: 0.25rem;
     }

@@ -14,8 +14,8 @@ export function Card({ index }: CardProps) {
       <strong>#{String(index).padStart(3, "0")}</strong>
       <span className="name">Nome</span>
       <div>
-        <span>electric</span>
-        <span>fighting</span>
+        <span className="type electric">electric</span>
+        <span className="type fighting">fighting</span>
       </div>
     </Container>
   );
