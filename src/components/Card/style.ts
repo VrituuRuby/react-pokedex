@@ -23,7 +23,7 @@ export const Container = styled.div`
     width: 100%;
     border-radius: 0.5rem;
     background-color: rgba(255, 255, 255, 0.05);
-    -webkit-filter: drop-shadow(0px 1px 5px rgba(0, 0, 0, 0.3));
+    -webkit-filter: drop-shadow(0px 1px 15px rgba(0, 0, 0, 1));
   }
 
   strong {

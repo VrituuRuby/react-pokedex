@@ -1,3 +1,10 @@
-import axios from "axios";
+import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
 
-export const api = axios.create();
+const httpLink = createHttpLink({
+  uri: "https://beta.pokeapi.co/graphql/v1beta",
+});
+
+export const client = new ApolloClient({
+  link: httpLink,
+  cache: new InMemoryCache(),
+});

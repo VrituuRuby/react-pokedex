@@ -1,5 +1,5 @@
+import { gql, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
-import { api } from "../../api";
 import { Card } from "../Card";
 import { Container } from "./style";
 
@@ -7,41 +7,52 @@ interface IPokemonData {
   url: string;
 }
 
-export function Table() {
-  const [offset, setOffset] = useState(1);
-  const [pokemonData, setPokemonData] = useState<IPokemonData[]>([]);
-
-  useEffect(() => {
-    const getInitialPokemonData = async () => {
-      const response = await api.get(
-        `https://pokeapi.co/api/v2/pokemon/?limit=12`
-      );
-      setPokemonData(response.data.results);
+interface IPokemon {
+  id: number;
+  name: string;
+  types: {
+    type: {
+      name: string;
     };
-    getInitialPokemonData();
-  }, []);
+  }[];
+}
 
-  const handleLoadMorePokemon = async () => {
+export function Table() {
+  const [pokemonList, setPokemonList] = useState<IPokemon[]>([]);
+  const [offset, setOffset] = useState(0);
+
+  const POKEMON_QUERY = gql`
+    query getPokemons {
+      pokemons: pokemon_v2_pokemon(limit: 12, offset: ${12 * offset}) {
+        id
+        name
+        types: pokemon_v2_pokemontypes {
+          type: pokemon_v2_type {
+            name
+          }
+        }
+      }
+    }
+  `;
+
+  useQuery(POKEMON_QUERY, {
+    onCompleted: (data) => {
+      setPokemonList((oldData) => [...oldData, ...data.pokemons]);
+    },
+  });
+
+  const handleLoadMorePokemon = () => {
     setOffset(offset + 1);
-    const newBatchResponse = await api.get(
-      `https://pokeapi.co/api/v2/pokemon/?limit=12&offset=${12 * offset}`
-    );
-
-    const newArray = [...pokemonData, ...newBatchResponse.data.results];
-
-    setPokemonData(newArray);
-    console.log(pokemonData);
   };
 
   return (
     <Container>
       <input type="text" placeholder="Pesquise um pokemon" />
       <div>
-        {pokemonData
-          ? pokemonData.map((result, index) => (
-              <Card key={index} url={result.url} />
-            ))
-          : ""}
+        {pokemonList &&
+          pokemonList?.map((pokemon: IPokemon) => (
+            <Card key={pokemon.id} pokemon={pokemon} />
+          ))}
         <div className="load-more">
           <button onClick={() => handleLoadMorePokemon()}>
             LOAD MORE POKÉMON

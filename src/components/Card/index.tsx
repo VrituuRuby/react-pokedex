@@ -1,9 +1,17 @@
 import { useEffect, useState } from "react";
-import { api } from "../../api";
+import { client } from "../../api";
 import { Container } from "./style";
 
 interface CardProps {
-  url: string;
+  pokemon: {
+    name: string;
+    id: number;
+    types: {
+      type: {
+        name: string;
+      };
+    }[];
+  };
 }
 
 interface IPokemonData {
@@ -24,30 +32,25 @@ interface IPokemonData {
   };
 }
 
-export function Card({ url }: CardProps) {
+export function Card({ pokemon }: CardProps) {
   const [pokemonData, setPokemonData] = useState({} as IPokemonData);
 
   useEffect(() => {
-    const loadPokemonData = async () => {
-      const response = await api.get(url);
-      setPokemonData(response.data);
-    };
+    const loadPokemonData = async () => {};
 
     loadPokemonData();
   }, []);
 
-  console.log(pokemonData?.name);
-
   return pokemonData ? (
     <Container>
       <img
-        src={pokemonData?.sprites?.other?.["official-artwork"]?.front_default}
+        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
         alt=""
       />
-      <strong>#{String(pokemonData.id).padStart(3, "0")}</strong>
-      <span className="name">{pokemonData.name}</span>
+      <strong>#{String(pokemon?.id).padStart(3, "0")}</strong>
+      <span className="name">{pokemon?.name}</span>
       <div>
-        {pokemonData.types?.map((type, index) => (
+        {pokemon.types?.map((type, index) => (
           <span key={index} className={`type ${type.type.name}`}>
             {type.type.name}
           </span>
