@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { client } from "../../api";
+import { useContext, useState } from "react";
+import { PokemonInfoContext } from "../../context/PokemonContext";
 import { Container } from "./style";
 
 interface CardProps {
@@ -14,35 +14,11 @@ interface CardProps {
   };
 }
 
-interface IPokemonData {
-  id: number;
-  index: number;
-  name: string;
-  types: {
-    type: {
-      name: string;
-    };
-  }[];
-  sprites: {
-    other: {
-      "official-artwork": {
-        front_default: string;
-      };
-    };
-  };
-}
-
 export function Card({ pokemon }: CardProps) {
-  const [pokemonData, setPokemonData] = useState({} as IPokemonData);
+  const { setSelectedPokemonId } = useContext(PokemonInfoContext);
 
-  useEffect(() => {
-    const loadPokemonData = async () => {};
-
-    loadPokemonData();
-  }, []);
-
-  return pokemonData ? (
-    <Container>
+  return pokemon ? (
+    <Container onClick={() => setSelectedPokemonId(pokemon.id)}>
       <img
         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
         alt=""
@@ -57,5 +33,7 @@ export function Card({ pokemon }: CardProps) {
         ))}
       </div>
     </Container>
-  ) : null;
+  ) : (
+    <p>Loading...</p>
+  );
 }

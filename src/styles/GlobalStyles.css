@@ -50,7 +50,7 @@ main {
   max-width: 1500px;
   margin: 0 auto;
   padding: 1rem;
-  flex-grow: 1;
+  flex: 1 1 0;
 }
 
 #root {
@@ -107,7 +107,7 @@ span.flying {
   background: #afbde1;
 }
 
-span.flying {
+span.dragon {
   background: #fa8072;
 }
 

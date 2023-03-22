@@ -1,17 +1,19 @@
 import { gql, useQuery } from "@apollo/client";
 import { CaretRight } from "phosphor-react";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { PokemonInfoContext } from "../../context/PokemonContext";
 import {
   Container,
   DexEntry,
   Evolution,
+  Loader,
   MainInfo,
   Measure,
   Weaknesses,
 } from "./style";
 
 interface PokemonInfoProps {
-  pokemon: IPokemonData;
+  pokemonId: number;
 }
 
 interface IPokemonData {
@@ -27,8 +29,18 @@ interface IPokemonData {
     name: string;
   }[];
   category: {
-    speciesnames: {
+    species_names: {
       genus: string;
+    }[];
+  }[];
+  pokedex_entry: {
+    flavor_text: {
+      english: string;
+    }[];
+  }[];
+  evolution_chain: {
+    evolutions: {
+      id: number;
     }[];
   }[];
 }
@@ -48,10 +60,11 @@ export function Info() {
     {} as IPokemonData
   );
 
-  const pokemonId = 84;
+  const { selectedPokemonId } = useContext(PokemonInfoContext);
+
   const POKEMON_QUERY = gql`
-    query getPokemon {
-      pokemon: pokemon_v2_pokemon(where: { id: { _eq: ${pokemonId} } }) {
+    query getPokemon($pokemonId: Int!) {
+      pokemon: pokemon_v2_pokemon(where: { id: { _eq: $pokemonId } }) {
         id
         name
         types: pokemon_v2_pokemontypes {
@@ -79,25 +92,38 @@ export function Info() {
         height
       }
       evolution_chain: pokemon_v2_evolutionchain(
-        where: { pokemon_v2_pokemonspecies: { id: { _eq: ${pokemonId} } } }
+        where: { pokemon_v2_pokemonspecies: { id: { _eq: $pokemonId } } }
       ) {
         id
-        pokemon_v2_pokemonspecies {
+        evolutions: pokemon_v2_pokemonspecies {
           id
           name
         }
       }
-      category: pokemon_v2_pokemonspecies(where: { id: { _eq: ${pokemonId}} }) {
-        speciesnames: pokemon_v2_pokemonspeciesnames(
+      category: pokemon_v2_pokemonspecies(where: { id: { _eq: $pokemonId } }) {
+        species_names: pokemon_v2_pokemonspeciesnames(
           where: { language_id: { _eq: 9 } }
         ) {
           genus
         }
       }
+      pokedex_entry: pokemon_v2_pokemonspecies(
+        where: { id: { _eq: $pokemonId } }
+      ) {
+        flavor_text: pokemon_v2_pokemonspeciesflavortexts(
+          where: { language_id: { _eq: 9 } }
+          limit: 1
+        ) {
+          english: flavor_text
+        }
+      }
     }
   `;
 
-  useQuery(POKEMON_QUERY, {
+  const { loading, error } = useQuery(POKEMON_QUERY, {
+    variables: {
+      pokemonId: selectedPokemonId,
+    },
     onCompleted: (data) => {
       let finalWeaknesses: SimpleType[] = [];
       const weaknesses: SimpleType[] = [];
@@ -118,85 +144,79 @@ export function Info() {
       const newPokemonInfo: IPokemonData = {
         ...data.pokemon[0],
         category: data.category,
+        pokedex_entry: data.pokedex_entry,
+        evolution_chain: data.evolution_chain,
         weaknesses: finalWeaknesses,
       };
 
-      console.log(data.category);
+      console.log(data);
 
       setPokemonInfo(newPokemonInfo);
     },
   });
 
-  console.log(pokemonInfo);
-
   return (
     <Container>
-      <MainInfo>
-        <img
-          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonInfo?.id}.png`}
-          alt="Pokémon Official Artwork"
-        />
-        <div>
-          <h2>{pokemonInfo?.name}</h2>
-          <span className="index">
-            #{String(pokemonInfo.id).padStart(3, "0")}
-          </span>
-        </div>
-        {/* <span>{String(pokemonInfo?.category[0]?.speciesnames) ?? ""}</span> */}
-        <div className="types">
-          {pokemonInfo?.types?.map(({ type }, index) => (
-            <span key={index} className={`type ${type.name}`}>
-              {type.name}
-            </span>
-          ))}
-        </div>
-      </MainInfo>
-      <DexEntry>
-        <h3>POKÉDEX ENTRY</h3>
-        <p>
-          To steal the life of its target, it slips into the prey’s shadow and
-          silently waits for an opportunity.
-        </p>
-      </DexEntry>
-      <Measure>
-        <div>
-          <h3>HEIGHT</h3>
-          <span>{pokemonInfo.height / 10}M</span>
-        </div>
-        <div>
-          <h3>WEIGHT</h3>
-          <span>{pokemonInfo.weight / 10} Kg</span>
-        </div>
-      </Measure>
-      <Weaknesses>
-        <h3>WEAKNESSES</h3>
-        <div className="types">
-          {pokemonInfo?.weaknesses?.map((weakness, index) => (
-            <span key={index} className={`type ${weakness.name}`}>
-              {weakness.name}
-            </span>
-          ))}
-        </div>
-      </Weaknesses>
-      <Evolution>
-        <h3>EVOLUTION</h3>
-        <div>
-          <img
-            src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/092.png"
-            alt=""
-          />
-          <CaretRight size={32} weight="bold" />
-          <img
-            src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/093.png"
-            alt=""
-          />
-          <CaretRight size={32} weight="bold" />
-          <img
-            src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/094.png"
-            alt=""
-          />
-        </div>
-      </Evolution>
+      {loading ? (
+        <Loader>Loading</Loader>
+      ) : (
+        <>
+          <MainInfo>
+            <img
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonInfo?.id}.png`}
+              alt="Pokémon Official Artwork"
+            />
+            <div>
+              <h2>{pokemonInfo?.name}</h2>
+              <span className="index">
+                #{String(pokemonInfo.id).padStart(3, "0")}
+              </span>
+            </div>
+            <span>{pokemonInfo?.category[0].species_names[0].genus}</span>
+            <div className="types">
+              {pokemonInfo?.types?.map(({ type }, index) => (
+                <span key={index} className={`type ${type.name}`}>
+                  {type.name}
+                </span>
+              ))}
+            </div>
+          </MainInfo>
+          <DexEntry>
+            <h3>POKÉDEX ENTRY</h3>
+            <p>{pokemonInfo.pokedex_entry[0].flavor_text[0].english}</p>
+          </DexEntry>
+          <Measure>
+            <div>
+              <h3>HEIGHT</h3>
+              <span>{pokemonInfo.height / 10}M</span>
+            </div>
+            <div>
+              <h3>WEIGHT</h3>
+              <span>{pokemonInfo.weight / 10} Kg</span>
+            </div>
+          </Measure>
+          <Weaknesses>
+            <h3>WEAKNESSES</h3>
+            <div className="types">
+              {pokemonInfo?.weaknesses?.map((weakness, index) => (
+                <span key={index} className={`type ${weakness.name}`}>
+                  {weakness.name}
+                </span>
+              ))}
+            </div>
+          </Weaknesses>
+          <Evolution>
+            <h3>EVOLUTION</h3>
+            <div>
+              {pokemonInfo?.evolution_chain[0].evolutions.map((evolution) => (
+                <img
+                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${evolution.id}.png`}
+                />
+              ))}
+            </div>
+          </Evolution>
+        </>
+      )}
     </Container>
   );
 }

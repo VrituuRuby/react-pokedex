@@ -1,13 +1,30 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.button`
   border-radius: 0.5rem;
   aspect-ratio: 5/7;
   flex: 1 1 200px;
   cursor: pointer;
-  transition: filter 0.2s;
+  border: 0;
+  animation: appear 0.5s;
+  transition: filter, background-color, transform 0.2s;
   &:hover {
-    filter: brightness(1.1);
+    background-color: #222;
+  }
+
+  @keyframes appear {
+    0% {
+      opacity: 0;
+      transform: translateY(+20px);
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  &:active {
+    outline: 0;
+    background-color: #333;
   }
 
   font-family: Rubik;

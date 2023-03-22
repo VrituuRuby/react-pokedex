@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 2.5 0 0;
+  flex: 2.25 1 0;
   gap: 0.5rem;
 
   input {
@@ -21,8 +21,9 @@ export const Container = styled.div`
     flex-wrap: wrap;
     gap: 0.5rem;
     overflow-y: scroll;
+    overflow-x: visible;
     height: 0;
-    flex: 1 1 auto;
+    flex: 1 1 0;
   }
 
   > div::-webkit-scrollbar {
