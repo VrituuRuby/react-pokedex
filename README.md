@@ -26,15 +26,6 @@ Clone this and the backend repository and then
 
 With local server running access `http://localhost:5173`
 
-## Functionalities and Features
-
-- Any user can create new tickets
-- Service role users get a list of all not closed or concluded tickets
-- When creating new tickets automatically fills in selected user data
-- Admin role users can create new categories and subcategories for tickets if necessary
-- Users can add notes to existing tickets to inform anything
-- Adding notes can change the ticket status between "open", "pending", "in progress" or "closed"
-
 ## Technologies
 
 - Vite.js
