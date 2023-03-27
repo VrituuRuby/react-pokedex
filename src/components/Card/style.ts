@@ -1,9 +1,17 @@
 import styled from "styled-components";
 
 export const Container = styled.button`
+  font-family: Rubik;
+  display: flex;
+  color: white;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #1d1d1d;
   border-radius: 0.5rem;
+  max-width: 220px;
   aspect-ratio: 5/7;
-  flex: 1 1 200px;
   cursor: pointer;
   border: 0;
   animation: appear 0.5s;
@@ -15,7 +23,7 @@ export const Container = styled.button`
   @keyframes appear {
     0% {
       opacity: 0;
-      transform: translateY(+20px);
+      transform: translateY(+50px);
     }
     100% {
       opacity: 1;
@@ -26,15 +34,6 @@ export const Container = styled.button`
     outline: 0;
     background-color: #333;
   }
-
-  font-family: Rubik;
-  display: flex;
-  color: white;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  background-color: #1d1d1d;
 
   img {
     width: 100%;

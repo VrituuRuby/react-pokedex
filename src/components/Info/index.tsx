@@ -1,6 +1,6 @@
+import { useContext, useState } from "react";
 import { gql, useQuery } from "@apollo/client";
-import { CaretRight } from "phosphor-react";
-import { useContext, useEffect, useState } from "react";
+
 import { PokemonInfoContext } from "../../context/PokemonContext";
 import {
   Container,
@@ -11,6 +11,9 @@ import {
   Measure,
   Weaknesses,
 } from "./style";
+
+import { TbPokeball } from "react-icons/tb";
+import { POKEMON_DETAIL_QUERY } from "../../graphql/queries";
 
 interface PokemonInfoProps {
   pokemonId: number;
@@ -60,67 +63,10 @@ export function Info() {
     {} as IPokemonData
   );
 
-  const { selectedPokemonId } = useContext(PokemonInfoContext);
+  const { selectedPokemonId, setSelectedPokemonId } =
+    useContext(PokemonInfoContext);
 
-  const POKEMON_QUERY = gql`
-    query getPokemon($pokemonId: Int!) {
-      pokemon: pokemon_v2_pokemon(where: { id: { _eq: $pokemonId } }) {
-        id
-        name
-        types: pokemon_v2_pokemontypes {
-          type: pokemon_v2_type {
-            name
-            weaknesses: pokemonV2TypeefficaciesByTargetTypeId(
-              where: { damage_factor: { _gt: 100 } }
-            ) {
-              damage_factor
-              type: pokemon_v2_type {
-                name
-              }
-            }
-            strengths: pokemonV2TypeefficaciesByTargetTypeId(
-              where: { damage_factor: { _lt: 100 } }
-            ) {
-              damage_factor
-              type: pokemon_v2_type {
-                name
-              }
-            }
-          }
-        }
-        weight
-        height
-      }
-      evolution_chain: pokemon_v2_evolutionchain(
-        where: { pokemon_v2_pokemonspecies: { id: { _eq: $pokemonId } } }
-      ) {
-        id
-        evolutions: pokemon_v2_pokemonspecies {
-          id
-          name
-        }
-      }
-      category: pokemon_v2_pokemonspecies(where: { id: { _eq: $pokemonId } }) {
-        species_names: pokemon_v2_pokemonspeciesnames(
-          where: { language_id: { _eq: 9 } }
-        ) {
-          genus
-        }
-      }
-      pokedex_entry: pokemon_v2_pokemonspecies(
-        where: { id: { _eq: $pokemonId } }
-      ) {
-        flavor_text: pokemon_v2_pokemonspeciesflavortexts(
-          where: { language_id: { _eq: 9 } }
-          limit: 1
-        ) {
-          english: flavor_text
-        }
-      }
-    }
-  `;
-
-  const { loading, error } = useQuery(POKEMON_QUERY, {
+  const { loading, error } = useQuery(POKEMON_DETAIL_QUERY, {
     variables: {
       pokemonId: selectedPokemonId,
     },
@@ -134,11 +80,15 @@ export function Info() {
         type.strengths.map((strength: any) => strengths.push(strength.type));
       });
 
-      console.log(data);
-
       finalWeaknesses = weaknesses.filter(
         (weakness) =>
           !strengths.find((strength) => weakness.name === strength.name)
+      );
+
+      const uniqueWeakness = finalWeaknesses.filter(
+        (weakness, index, self) =>
+          index ===
+          self.findIndex((duplicate) => duplicate.name === weakness.name)
       );
 
       const newPokemonInfo: IPokemonData = {
@@ -146,10 +96,10 @@ export function Info() {
         category: data.category,
         pokedex_entry: data.pokedex_entry,
         evolution_chain: data.evolution_chain,
-        weaknesses: finalWeaknesses,
+        weaknesses: uniqueWeakness,
       };
 
-      console.log(data);
+      console.log(newPokemonInfo);
 
       setPokemonInfo(newPokemonInfo);
     },
@@ -158,7 +108,9 @@ export function Info() {
   return (
     <Container>
       {loading ? (
-        <Loader>Loading</Loader>
+        <Loader>
+          <TbPokeball size={200} />
+        </Loader>
       ) : (
         <>
           <MainInfo>
@@ -181,10 +133,12 @@ export function Info() {
               ))}
             </div>
           </MainInfo>
-          <DexEntry>
-            <h3>POKÉDEX ENTRY</h3>
-            <p>{pokemonInfo.pokedex_entry[0].flavor_text[0].english}</p>
-          </DexEntry>
+          {pokemonInfo?.pokedex_entry[0]?.flavor_text[0]?.english && (
+            <DexEntry>
+              <h3>POKÉDEX ENTRY</h3>
+              <p>{pokemonInfo?.pokedex_entry[0]?.flavor_text[0]?.english}</p>
+            </DexEntry>
+          )}
           <Measure>
             <div>
               <h3>HEIGHT</h3>
@@ -209,9 +163,14 @@ export function Info() {
             <h3>EVOLUTION</h3>
             <div>
               {pokemonInfo?.evolution_chain[0].evolutions.map((evolution) => (
-                <img
-                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${evolution.id}.png`}
-                />
+                <button
+                  key={evolution.id}
+                  onClick={() => setSelectedPokemonId(evolution.id)}
+                >
+                  <img
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${evolution.id}.png`}
+                  />
+                </button>
               ))}
             </div>
           </Evolution>

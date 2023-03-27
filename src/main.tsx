@@ -11,7 +11,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <ApolloProvider client={client}>
       <Header />
       <Main />
-      <footer>© Victor Velozo 2023</footer>
+      <footer>&#169; Victor Velozo 2023</footer>
     </ApolloProvider>
   </React.StrictMode>
 );

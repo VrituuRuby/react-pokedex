@@ -6,7 +6,10 @@ A simple pokedex display made in react js with <a href="https://pokeapi.co/docs/
 
 <p align='center'>
 
-<img src='./public/screenshots/pokedex.png'>
+<div style="display: flex"> 
+<img src='./public/screenshots/pokedex.png' width="50%">
+<img src='./public/screenshots/search.png' width="50%">
+</div>
 </p>
 
 ## About
@@ -22,9 +25,14 @@ Clone this and the backend repository and then
 1. Install dependencies with `npm install` or `yarn` in the terminal
 2. Run it with `npm` or `yarn dev`
 
-## Usage
+## Usage and Features
 
 With local server running access `http://localhost:5173`
+
+- Displays pokémon from every generation
+- Displays pokédex entry in English
+- Displays pokémon types and its weakness (based on type only, doesn't consider pokémon signature abilities)
+- You can search pokémon name to display
 
 ## Technologies
 

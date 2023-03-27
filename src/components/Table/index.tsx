@@ -1,12 +1,9 @@
-import { gql, useQuery } from "@apollo/client";
-import { useEffect, useState } from "react";
+import { useQuery } from "@apollo/client";
+import { ChangeEvent, useEffect, useState } from "react";
+import { POKEMON_QUERY, POKEMON_QUERY_BY_NAME } from "../../graphql/queries";
+import useDebounce from "../../hooks/useDebouce";
 import { Card } from "../Card";
 import { Container } from "./style";
-
-interface IPokemonData {
-  url: string;
-}
-
 interface IPokemon {
   id: number;
   name: string;
@@ -18,26 +15,19 @@ interface IPokemon {
 }
 
 export function Table() {
+  const [displaySearch, setDisplaySearch] = useState("");
   const [pokemonList, setPokemonList] = useState<IPokemon[]>([]);
-  const [offset, setOffset] = useState(0);
+  const [offset, setOffset] = useState(1);
 
-  const POKEMON_QUERY = gql`
-    query getPokemons {
-      pokemons: pokemon_v2_pokemon(limit: 12, offset: ${12 * offset}) {
-        id
-        name
-        types: pokemon_v2_pokemontypes {
-          type: pokemon_v2_type {
-            name
-          }
-        }
-      }
-    }
-  `;
+  function onChangeSearch() {}
 
   useQuery(POKEMON_QUERY, {
+    variables: {
+      offset: offset * 12,
+      name: displaySearch,
+    },
     onCompleted: (data) => {
-      setPokemonList((oldData) => [...oldData, ...data.pokemons]);
+      setPokemonList([...data.pokemons]);
     },
   });
 
@@ -47,7 +37,12 @@ export function Table() {
 
   return (
     <Container>
-      <input type="text" placeholder="Pesquise um pokemon" />
+      <input
+        type="text"
+        placeholder="Pesquise um pokemon"
+        onChange={(e) => setDisplaySearch(e.target.value)}
+        value={displaySearch}
+      />
       <div>
         {pokemonList &&
           pokemonList?.map((pokemon: IPokemon) => (

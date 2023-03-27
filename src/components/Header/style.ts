@@ -26,9 +26,11 @@ export const Container = styled.header`
       display: flex;
       align-items: center;
       font-size: 1.5rem;
-      gap: 0.5rem;
       height: 100%;
       a {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
         font-family: Rubik;
         height: 100%;
         padding: 1rem;

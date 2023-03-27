@@ -10,11 +10,8 @@ export const Container = styled.div`
   gap: 1rem;
   flex: 1 1 0;
 
-  span {
-    font-family: Barlow;
-    font-weight: bold;
-    font-size: 1.25rem;
-    color: #5c5c5c;
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
 
@@ -24,6 +21,20 @@ export const Loader = styled.div`
   align-items: center;
   justify-content: center;
   color: white;
+
+  svg {
+    animation: rotate infinite 0.5s linear;
+    width: 100%;
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 `;
 
 export const MainInfo = styled.div`
@@ -33,14 +44,19 @@ export const MainInfo = styled.div`
   color: white;
   gap: 0.5rem;
   width: 100%;
-  flex: 1 2 0;
+  flex: 2;
 
   img {
     -webkit-filter: drop-shadow(0px 1px 5px rgba(0, 0, 0, 0.8));
+    height: 25vmin;
   }
 
   span {
     text-transform: uppercase;
+    font-family: "Barlow";
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: #5c5c5c;
   }
 
   div {
@@ -174,7 +190,7 @@ export const Evolution = styled.div`
   flex-direction: column;
   width: 100%;
   align-items: center;
-  flex: 2 1 0;
+  flex: 1;
 
   h3 {
     color: white;
@@ -186,8 +202,22 @@ export const Evolution = styled.div`
   div {
     width: 100%;
     display: flex;
+    flex: 1;
+    align-items: center;
+    flex-wrap: wrap;
     gap: 1rem;
     justify-content: space-evenly;
+
+    button {
+      border: 0;
+      background: none;
+      cursor: pointer;
+      border-radius: 0.5rem;
+      &:hover {
+        background-color: #222;
+      }
+    }
+
     img {
       height: 15vmin;
     }

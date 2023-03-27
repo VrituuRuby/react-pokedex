@@ -3,10 +3,11 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 2.25 1 0;
   gap: 0.5rem;
+  flex: 2 2 0;
 
   input {
+    width: 100%;
     padding: 0.5rem 1rem;
     background-color: #2c2c2c;
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -20,10 +21,13 @@ export const Container = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+    margin: 0 auto;
     overflow-y: scroll;
     overflow-x: visible;
     height: 0;
     flex: 1 1 0;
+    align-items: center;
+    justify-content: center;
   }
 
   > div::-webkit-scrollbar {
@@ -43,6 +47,7 @@ export const Container = styled.div`
       color: white;
       font-family: Rubik;
       font-weight: bold;
+      font-size: 1.5rem;
       border: 0;
       border-radius: 0.5rem;
       cursor: pointer;
