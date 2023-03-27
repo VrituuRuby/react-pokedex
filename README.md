@@ -7,7 +7,7 @@ A simple pokedex display made in react js with <a href="https://pokeapi.co/docs/
 <p align='center'>
 
 <div style="display: flex"> 
-<img src='./public/screenshots/pokedex.png' width="50%">
+<img src='./public/screenshots/pokedex.png'>
 </div>
 </p>
 
