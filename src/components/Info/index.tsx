@@ -99,8 +99,6 @@ export function Info() {
         weaknesses: uniqueWeakness,
       };
 
-      console.log(newPokemonInfo);
-
       setPokemonInfo(newPokemonInfo);
     },
   });
