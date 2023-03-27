@@ -115,7 +115,8 @@ export const DexEntry = styled.div`
     font-size: 1.25rem;
   }
   p {
-    font-family: Roboto;
+    white-space: normal;
+    font-family: "Roboto", sans-serif;
     text-align: center;
   }
 `;

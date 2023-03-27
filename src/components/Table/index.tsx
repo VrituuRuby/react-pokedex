@@ -19,14 +19,11 @@ export function Table() {
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [pokemonList, setPokemonList] = useState<IPokemon[]>([]);
   const [offset, setOffset] = useState(1);
-  const debouncedSet = useDebounce(
-    () => setDebouncedSearch(displaySearch),
-    500
-  );
+  const setDebounced = useDebounce(setDebouncedSearch, 500);
 
   function onChangeSearch(event: ChangeEvent<HTMLInputElement>) {
     setDisplaySearch(event.target.value);
-    debouncedSet();
+    setDebounced(event.target.value);
   }
 
   useQuery(POKEMON_QUERY, {

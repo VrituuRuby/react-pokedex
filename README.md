@@ -8,7 +8,6 @@ A simple pokedex display made in react js with <a href="https://pokeapi.co/docs/
 
 <div style="display: flex"> 
 <img src='./public/screenshots/pokedex.png' width="50%">
-<img src='./public/screenshots/search.png' width="50%">
 </div>
 </p>
 
@@ -34,7 +33,7 @@ With local server running access `http://localhost:5173`
 - Displays pokémon types and its weakness (based on type only, doesn't consider pokémon signature abilities)
 - You can search pokémon name to display
 
-Due to GraphQL API being in beta, there are some pokémon without dex entries or with out images.
+Due to GraphQL API being in beta, there are some pokémon without dex entries, images or incorrect evolution order.
 
 ## Technologies
 
