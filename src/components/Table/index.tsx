@@ -16,15 +16,23 @@ interface IPokemon {
 
 export function Table() {
   const [displaySearch, setDisplaySearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [pokemonList, setPokemonList] = useState<IPokemon[]>([]);
   const [offset, setOffset] = useState(1);
+  const debouncedSet = useDebounce(
+    () => setDebouncedSearch(displaySearch),
+    500
+  );
 
-  function onChangeSearch() {}
+  function onChangeSearch(event: ChangeEvent<HTMLInputElement>) {
+    setDisplaySearch(event.target.value);
+    debouncedSet();
+  }
 
   useQuery(POKEMON_QUERY, {
     variables: {
       offset: offset * 12,
-      name: displaySearch,
+      name: debouncedSearch,
     },
     onCompleted: (data) => {
       setPokemonList([...data.pokemons]);
@@ -40,7 +48,7 @@ export function Table() {
       <input
         type="text"
         placeholder="Pesquise um pokemon"
-        onChange={(e) => setDisplaySearch(e.target.value)}
+        onChange={onChangeSearch}
         value={displaySearch}
       />
       <div>
