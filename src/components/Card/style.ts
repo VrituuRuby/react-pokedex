@@ -16,10 +16,13 @@ export const Container = styled.button`
   cursor: pointer;
   border: 0;
   animation: appear 0.5s;
-  transition: filter, background-color, transform 0.2s;
+
+  transition: filter, background-color, box-shadow, 0.2s;
   &:hover {
     background-color: #222;
+    box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.3);
   }
+  border: 1px solid rgba(255, 255, 255, 0.17);
 
   @keyframes appear {
     0% {

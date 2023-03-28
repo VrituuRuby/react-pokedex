@@ -10,6 +10,8 @@ export const Container = styled.div`
   gap: 1rem;
   flex: 1 2 0;
 
+  border: 1px solid rgba(255, 255, 255, 0.17);
+
   @media (max-width: 840px) {
     position: absolute;
     top: 0;
