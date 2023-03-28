@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.main`
+  position: relative;
   display: flex;
   gap: 0.5rem;
   width: 100%;
@@ -8,4 +9,8 @@ export const Container = styled.main`
   margin: 0 auto;
   padding: 1rem;
   flex: 1 1 0;
+
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+  }
 `;
