@@ -8,7 +8,17 @@ export const Container = styled.div`
   border-radius: 0.5rem;
   padding: 1rem;
   gap: 1rem;
-  flex: 1 1 0;
+  flex: 1 2 0;
+
+  @media (max-width: 840px) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 2rem;
+    box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.2);
+    height: 100%;
+  }
 
   &::-webkit-scrollbar {
     display: none;
@@ -21,6 +31,8 @@ export const Loader = styled.div`
   align-items: center;
   justify-content: center;
   color: white;
+  width: 100%;
+  height: 100%;
 
   svg {
     animation: rotate infinite 0.5s linear;
@@ -44,11 +56,14 @@ export const MainInfo = styled.div`
   color: white;
   gap: 0.5rem;
   width: 100%;
-  flex: 2;
+  flex: 2 1 0;
+  min-height: 0;
+  overflow: hidden;
 
   img {
     -webkit-filter: drop-shadow(0px 1px 5px rgba(0, 0, 0, 0.8));
-    height: 25vmin;
+    flex: 1 1 0;
+    min-height: 0;
   }
 
   span {
@@ -191,7 +206,8 @@ export const Evolution = styled.div`
   flex-direction: column;
   width: 100%;
   align-items: center;
-  flex: 1;
+  flex: 1 1 0;
+  min-height: 0;
 
   h3 {
     color: white;
@@ -204,12 +220,33 @@ export const Evolution = styled.div`
     width: 100%;
     display: flex;
     flex: 1;
+    min-height: 0;
+    overflow-y: scroll;
     align-items: center;
     flex-wrap: wrap;
     gap: 1rem;
     justify-content: space-evenly;
 
+    scroll-snap-type: y mandatory;
+
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #555;
+      border-radius: 999px;
+      &:hover {
+        background-color: #888;
+      }
+    }
+
     button {
+      flex: 1;
+      min-height: 0;
+      max-width: 15vmin;
+      min-width: 15vmin;
+      overflow: hidden;
       border: 0;
       background: none;
       cursor: pointer;
@@ -217,10 +254,9 @@ export const Evolution = styled.div`
       &:hover {
         background-color: #222;
       }
-    }
-
-    img {
-      height: 15vmin;
+      img {
+        width: 100%;
+      }
     }
   }
 `;

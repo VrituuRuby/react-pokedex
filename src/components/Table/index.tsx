@@ -53,11 +53,13 @@ export function Table() {
           pokemonList?.map((pokemon: IPokemon) => (
             <Card key={pokemon.id} pokemon={pokemon} />
           ))}
-        <div className="load-more">
-          <button onClick={() => handleLoadMorePokemon()}>
-            LOAD MORE POKÉMON
-          </button>
-        </div>
+        {displaySearch === "" && (
+          <div className="load-more">
+            <button onClick={() => handleLoadMorePokemon()}>
+              LOAD MORE POKÉMON
+            </button>
+          </div>
+        )}
       </div>
     </Container>
   );

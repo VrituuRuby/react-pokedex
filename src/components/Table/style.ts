@@ -4,7 +4,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  flex: 2 2 0;
+  flex: 2 1 0;
 
   input {
     width: 100%;
@@ -21,13 +21,13 @@ export const Container = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin: 0 auto;
     overflow-y: scroll;
     overflow-x: visible;
+    justify-content: center;
+    align-items: flex-start;
     height: 0;
     flex: 1 1 0;
-    align-items: center;
-    justify-content: center;
+    width: 100%;
   }
 
   > div::-webkit-scrollbar {

@@ -20,6 +20,9 @@ export const Container = styled.header`
     h1 {
       font-family: Rubik;
       font-size: 2rem;
+      @media (max-width: 1024px) {
+        font-size: 1.5rem;
+      }
     }
 
     nav {
@@ -35,6 +38,8 @@ export const Container = styled.header`
         height: 100%;
         padding: 1rem;
         text-decoration: none;
+        color: white;
+        font-size: 1rem;
         &:visited {
           color: white;
         }

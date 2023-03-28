@@ -10,8 +10,9 @@ export const Container = styled.button`
   padding: 1rem;
   background-color: #1d1d1d;
   border-radius: 0.5rem;
-  max-width: 220px;
+  flex: 1 1 200px;
   aspect-ratio: 5/7;
+  max-width: 250px;
   cursor: pointer;
   border: 0;
   animation: appear 0.5s;
@@ -64,6 +65,7 @@ export const Container = styled.button`
     font-weight: bold;
 
     span {
+      font-size: 1rem;
       display: flex;
       align-items: center;
       font-weight: bold;
