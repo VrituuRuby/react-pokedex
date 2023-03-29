@@ -1,7 +1,8 @@
 import { useContext, useState } from "react";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 
 import { PokemonInfoContext } from "../../context/PokemonContext";
+import { POKEMON_DETAIL_QUERY } from "../../graphql/queries";
 import {
   Container,
   DexEntry,
@@ -13,7 +14,7 @@ import {
 } from "./style";
 
 import { TbPokeball } from "react-icons/tb";
-import { POKEMON_DETAIL_QUERY } from "../../graphql/queries";
+import { AiOutlineClose, AiOutlineCloseCircle } from "react-icons/ai";
 
 interface PokemonInfoProps {
   pokemonId: number;
@@ -59,7 +60,7 @@ interface ComplexType {
 }
 
 export function Info() {
-  const [pokemonInfo, setPokemonInfo] = useState<IPokemonData>(
+  const [pokemonInfo, setPokemonInfo] = useState<IPokemonData | null>(
     {} as IPokemonData
   );
 
@@ -103,8 +104,11 @@ export function Info() {
     },
   });
 
-  return (
+  return pokemonInfo ? (
     <Container>
+      <button className="close-button" onClick={() => setPokemonInfo(null)}>
+        <AiOutlineClose size="2rem" />
+      </button>
       {loading ? (
         <Loader>
           <TbPokeball size={200} />
@@ -119,7 +123,7 @@ export function Info() {
             <div>
               <h2>{pokemonInfo?.name}</h2>
               <span className="index">
-                #{String(pokemonInfo.id).padStart(3, "0")}
+                #{String(pokemonInfo?.id).padStart(3, "0")}
               </span>
             </div>
             <span>{pokemonInfo?.category[0].species_names[0].genus}</span>
@@ -140,11 +144,11 @@ export function Info() {
           <Measure>
             <div>
               <h3>HEIGHT</h3>
-              <span>{pokemonInfo.height / 10}M</span>
+              <span>{pokemonInfo?.height / 10}M</span>
             </div>
             <div>
               <h3>WEIGHT</h3>
-              <span>{pokemonInfo.weight / 10} Kg</span>
+              <span>{pokemonInfo?.weight / 10} Kg</span>
             </div>
           </Measure>
           <Weaknesses>
@@ -175,5 +179,5 @@ export function Info() {
         </>
       )}
     </Container>
-  );
+  ) : null;
 }

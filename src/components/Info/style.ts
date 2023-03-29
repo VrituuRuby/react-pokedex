@@ -12,7 +12,27 @@ export const Container = styled.div`
 
   border: 1px solid rgba(255, 255, 255, 0.17);
 
-  @media (max-width: 840px) {
+  button.close-button {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 0.5rem;
+    padding: 1rem;
+    background: 0;
+    border: 0;
+    color: white;
+    border-radius: 999px;
+    &:hover,
+    &:active {
+      background-color: #333;
+    }
+  }
+
+  @media (max-width: 900px) {
     position: absolute;
     top: 0;
     left: 0;
@@ -20,6 +40,23 @@ export const Container = styled.div`
     margin: 2rem;
     box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.2);
     height: 100%;
+    animation: appear 0.1s linear;
+
+    button.close-button {
+      display: flex;
+      z-index: 1;
+    }
+
+    @keyframes appear {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   }
 
   &::-webkit-scrollbar {
@@ -229,7 +266,7 @@ export const Evolution = styled.div`
     gap: 1rem;
     justify-content: space-evenly;
 
-    scroll-snap-type: y mandatory;
+    scroll-snap-type: y;
 
     ::-webkit-scrollbar {
       width: 10px;

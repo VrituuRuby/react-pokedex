@@ -12,10 +12,9 @@ export const Container = styled.button`
   border-radius: 0.5rem;
   flex: 1 1 200px;
   aspect-ratio: 5/7;
-  max-width: 250px;
+  max-width: 300px;
   cursor: pointer;
   border: 0;
-  animation: appear 0.5s;
 
   transition: filter, background-color, box-shadow, 0.2s;
   &:hover {
@@ -23,16 +22,6 @@ export const Container = styled.button`
     box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.3);
   }
   border: 1px solid rgba(255, 255, 255, 0.17);
-
-  @keyframes appear {
-    0% {
-      opacity: 0;
-      transform: translateY(+50px);
-    }
-    100% {
-      opacity: 1;
-    }
-  }
 
   &:active {
     outline: 0;

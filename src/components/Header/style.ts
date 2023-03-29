@@ -23,6 +23,10 @@ export const Container = styled.header`
       @media (max-width: 1024px) {
         font-size: 1.5rem;
       }
+      @media (max-width: 480px) {
+        font-size: 1.25rem;
+        padding: 0.5rem 0;
+      }
     }
 
     nav {
@@ -46,6 +50,13 @@ export const Container = styled.header`
 
         &:hover {
           background-color: #222;
+        }
+
+        @media (max-width: 480px) {
+          padding: 0.5rem;
+          svg {
+            width: 1rem;
+          }
         }
       }
     }

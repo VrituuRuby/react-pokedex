@@ -41,6 +41,59 @@ export const Container = styled.div`
         background-color: #333;
       }
     }
+    > button:nth-child(1n) {
+      animation: appear-up 0.5s ease-in-out;
+    }
+
+    > button:nth-child(2n) {
+      animation: appear-down 0.5s ease-in-out;
+    }
+
+    > button:nth-child(3n) {
+      animation: appear-right 0.5s ease-in-out;
+    }
+
+    > button:nth-child(4n) {
+      animation: appear-left 0.5s ease-in-out;
+    }
+  }
+
+  @keyframes appear-left {
+    0% {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes appear-down {
+    0% {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes appear-up {
+    0% {
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes appear-right {
+    0% {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    100% {
+      opacity: 1;
+    }
   }
 
   > div .load-more {
@@ -48,7 +101,8 @@ export const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 5rem;
+    padding: 5rem 0;
+    padding-bottom: 20rem;
 
     button {
       padding: 0.5rem 1rem;
