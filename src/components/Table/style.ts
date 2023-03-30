@@ -6,18 +6,7 @@ export const Container = styled.div`
   gap: 0.5rem;
   flex: 2 1 0;
 
-  input {
-    width: 100%;
-    padding: 0.5rem 1rem;
-    background-color: #2c2c2c;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 0.5rem;
-    font-size: 1.25rem;
-    font-weight: bold;
-    color: white;
-  }
-
-  > div {
+  > div.table {
     padding: 0.5rem;
     display: flex;
     flex-wrap: wrap;
@@ -122,5 +111,37 @@ export const Container = styled.div`
         background-color: #777;
       }
     }
+  }
+`;
+
+export const InputField = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background-color: #2c2c2c;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  overflow: hidden;
+
+  input {
+    padding: 0.5rem;
+    flex: 1;
+    border: 0;
+    border-radius: 0.5rem;
+    background: 0;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: white;
+  }
+
+  button {
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    background: 0;
+    color: #777;
+    border: 0;
+    cursor: pointer;
   }
 `;

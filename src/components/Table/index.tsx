@@ -1,9 +1,12 @@
+import { ChangeEvent, useState } from "react";
 import { useQuery } from "@apollo/client";
-import { ChangeEvent, useEffect, useState } from "react";
-import { POKEMON_QUERY, POKEMON_QUERY_BY_NAME } from "../../graphql/queries";
+
+import { POKEMON_QUERY } from "../../graphql/queries";
 import useDebounce from "../../hooks/useDebouce";
 import { Card } from "../Card";
-import { Container } from "./style";
+
+import { Container, InputField } from "./style";
+import { AiOutlineClose } from "react-icons/ai";
 interface IPokemon {
   id: number;
   name: string;
@@ -26,6 +29,11 @@ export function Table() {
     setDebounced(event.target.value);
   }
 
+  function handleCleanInput() {
+    setDisplaySearch("");
+    setDebounced("");
+  }
+
   useQuery(POKEMON_QUERY, {
     variables: {
       offset: offset * 12,
@@ -42,13 +50,13 @@ export function Table() {
 
   return (
     <Container>
-      <input
-        type="text"
-        placeholder="Pesquise um pokemon"
-        onChange={onChangeSearch}
-        value={displaySearch}
-      />
-      <div>
+      <InputField>
+        <input type="text" onChange={onChangeSearch} value={displaySearch} />
+        <button onClick={handleCleanInput}>
+          <AiOutlineClose size={25} fontWeight={800} />
+        </button>
+      </InputField>
+      <div className="table">
         {pokemonList &&
           pokemonList?.map((pokemon: IPokemon) => (
             <Card key={pokemon.id} pokemon={pokemon} />

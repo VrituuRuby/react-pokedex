@@ -4,10 +4,11 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   background-color: #1d1d1d;
   border-radius: 0.5rem;
+  gap: 0.5rem;
   padding: 1rem;
-  gap: 1rem;
   flex: 1 2 0;
 
   border: 1px solid rgba(255, 255, 255, 0.17);
@@ -37,9 +38,10 @@ export const Container = styled.div`
     top: 0;
     left: 0;
     right: 0;
-    margin: 2rem;
     box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.2);
     height: 100%;
+    border: 0;
+    border-radius: 0;
     animation: appear 0.1s linear;
 
     button.close-button {
@@ -66,7 +68,8 @@ export const Container = styled.div`
 
 export const Loader = styled.div`
   display: flex;
-  flex: 1 1 0;
+  min-width: 0;
+  flex: 1 0 0;
   align-items: center;
   justify-content: center;
   color: white;
@@ -74,7 +77,7 @@ export const Loader = styled.div`
   height: 100%;
 
   svg {
-    animation: rotate infinite 0.5s linear;
+    animation: rotate infinite 0.5s ease-out;
     width: 100%;
   }
 
@@ -102,7 +105,7 @@ export const MainInfo = styled.div`
   img {
     -webkit-filter: drop-shadow(0px 1px 5px rgba(0, 0, 0, 0.8));
     flex: 1 1 0;
-    min-height: 0;
+    min-height: 20vmin;
   }
 
   span {
@@ -245,7 +248,7 @@ export const Evolution = styled.div`
   flex-direction: column;
   width: 100%;
   align-items: center;
-  flex: 1 1 0;
+  flex: 1 2 0;
   min-height: 0;
 
   h3 {
@@ -256,17 +259,14 @@ export const Evolution = styled.div`
   }
 
   div {
-    width: 100%;
     display: flex;
-    flex: 1;
     min-height: 0;
     overflow-y: scroll;
+    overflow-x: hidden;
     align-items: center;
+    justify-content: center;
     flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: space-evenly;
-
-    scroll-snap-type: y;
+    width: 100%;
 
     ::-webkit-scrollbar {
       width: 10px;
@@ -281,20 +281,20 @@ export const Evolution = styled.div`
     }
 
     button {
+      padding: 1rem;
+      display: flex;
       flex: 1;
-      min-height: 0;
-      max-width: 15vmin;
-      min-width: 15vmin;
-      overflow: hidden;
       border: 0;
       background: none;
       cursor: pointer;
       border-radius: 0.5rem;
+      height: 100%;
+      justify-content: center;
       &:hover {
         background-color: #222;
       }
       img {
-        width: 100%;
+        height: 100%;
       }
     }
   }
