@@ -47,4 +47,4 @@ Due to GraphQL API being in beta, there are some pokémon without dex entries, i
 ## Links
 
 - [Figma](https://www.figma.com/file/QgQ7jZmtF7eYlKIO5re0YH/PokeJS?node-id=0%3A1&t=VB0722ZjecBMGtPv-1)
-- [Live Demo](https://rubydex.onrender.com)
+- [Live Demo](https://reactdex.onrender.com)
