@@ -106,7 +106,12 @@ export function Info() {
 
   return pokemonInfo ? (
     <Container>
-      <button className="close-button" onClick={() => setPokemonInfo(null)}>
+      <button
+        className="close-button"
+        onClick={() => {
+          setPokemonInfo(null), setSelectedPokemonId(null);
+        }}
+      >
         <AiOutlineClose size="2rem" />
       </button>
       {loading ? (

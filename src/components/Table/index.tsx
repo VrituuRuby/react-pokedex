@@ -5,8 +5,9 @@ import { POKEMON_QUERY } from "../../graphql/queries";
 import useDebounce from "../../hooks/useDebouce";
 import { Card } from "../Card";
 
-import { Container, InputField } from "./style";
-import { AiOutlineClose } from "react-icons/ai";
+import { Container, EmptyState, InputField, Loader } from "./style";
+import { AiOutlineClose, AiOutlineSearch } from "react-icons/ai";
+import { TbPokeball } from "react-icons/tb";
 interface IPokemon {
   id: number;
   name: string;
@@ -34,7 +35,7 @@ export function Table() {
     setDebounced("");
   }
 
-  useQuery(POKEMON_QUERY, {
+  const { loading } = useQuery(POKEMON_QUERY, {
     variables: {
       offset: offset * 12,
       name: debouncedSearch,
@@ -51,16 +52,31 @@ export function Table() {
   return (
     <Container>
       <InputField>
-        <input type="text" onChange={onChangeSearch} value={displaySearch} />
+        <AiOutlineSearch size={30} />
+        <input
+          type="text"
+          onChange={onChangeSearch}
+          value={displaySearch}
+          placeholder="Search a pokemon name"
+        />
         <button onClick={handleCleanInput}>
           <AiOutlineClose size={25} fontWeight={800} />
         </button>
       </InputField>
       <div className="table">
-        {pokemonList &&
+        {loading ? (
+          <Loader>
+            <TbPokeball size="80px" />
+          </Loader>
+        ) : pokemonList.length > 0 ? (
           pokemonList?.map((pokemon: IPokemon) => (
             <Card key={pokemon.id} pokemon={pokemon} />
-          ))}
+          ))
+        ) : (
+          <EmptyState>
+            <p>None matches your search!</p>
+          </EmptyState>
+        )}
         {displaySearch === "" && (
           <div className="load-more">
             <button onClick={() => handleLoadMorePokemon()}>
