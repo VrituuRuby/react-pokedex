@@ -4,14 +4,14 @@ interface PokemonProviderProps {
 }
 
 interface IPokemonInfoContext {
-  selectedPokemonId: number;
-  setSelectedPokemonId: (id: number) => void;
+  selectedPokemonId: number | null;
+  setSelectedPokemonId: (id: number | null) => void;
 }
 
 export const PokemonInfoContext = createContext({} as IPokemonInfoContext);
 
 export function PokemonInfoProvider({ children }: PokemonProviderProps) {
-  const [selectedPokemonId, setSelectedPokemonId] = useState(94);
+  const [selectedPokemonId, setSelectedPokemonId] = useState<number | null>(94);
 
   return (
     <PokemonInfoContext.Provider
