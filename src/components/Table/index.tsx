@@ -64,7 +64,7 @@ export function Table() {
         </button>
       </InputField>
       <div className="table">
-        {loading ? (
+        {loading && displaySearch ? (
           <Loader>
             <TbPokeball size="80px" />
           </Loader>

@@ -23,7 +23,7 @@ export function Card({ pokemon }: CardProps) {
         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
         alt=""
       />
-      <strong>#{String(pokemon?.id).padStart(3, "0")}</strong>
+      <strong>#{String(pokemon?.id).padStart(4, "0")}</strong>
       <span className="name">{pokemon?.name}</span>
       <div>
         {pokemon.types?.map((type, index) => (
